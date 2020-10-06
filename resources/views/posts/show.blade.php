@@ -73,7 +73,7 @@
       }).catch((error) => console.log(error));
     },
     listen(){
-      Echo.channel(`post.${this.post.id}`).listen('NewComment', (comment) => {
+      Echo.private(`post.${this.post.id}`).listen('NewComment', (comment) => {
         this.comments.unshift(comment);
       });
     }
