@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Events\NewComment;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class CommentController extends Controller
             'user_id' => auth()->id()
         ]);
         $comment = Comment::where('id', $comment->id)->with('user')->first();
+        broadcast(new NewComment($comment))->toOthers();
         return $comment->toJson();
     }
 }
